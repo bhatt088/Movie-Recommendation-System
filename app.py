@@ -37,12 +37,16 @@ headers = {
 
 def fetch_poster(movie_id):
     url = f"https://api.themoviedb.org/3/movie/{movie_id}"
-    response = requests.get(url, headers=headers)
-    data = response.json()
-
-    if 'poster_path' in data and data['poster_path']:
-        return "https://image.tmdb.org/t/p/w500" + data['poster_path']
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+        data = response.json()
+        poster_path = data.get("poster_path")
+        if poster_path:
+            return "https://image.tmdb.org/t/p/w500" + poster_path
+    except:
+        pass
     return None
+
 
 
 
@@ -72,24 +76,39 @@ selected_movie_name = st.selectbox(
     "choose your movie ",
     movies['title'].values)
 
-
 if st.button('Recommend'):
-    names,posters = recommend(selected_movie_name,similarity)
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        st.image(posters[0],use_container_width=True)
-        st.markdown(f"<div class='movie-title'>{names[0]}</div>", unsafe_allow_html=True)
-    with col2:
-        st.image(posters[1],use_container_width=True)
-        st.markdown(f"<div class='movie-title'>{names[1]}</div>", unsafe_allow_html=True)
-    with col3:
-        st.image(posters[2],use_container_width=True)
-        st.markdown(f"<div class='movie-title'>{names[2]}</div>", unsafe_allow_html=True)
-    with col4:
-        st.image(posters[3],use_container_width=True)
-        st.markdown(f"<div class='movie-title'>{names[3]}</div>", unsafe_allow_html=True)
-    with col5:
-        st.image(posters[4],use_container_width=True)
-        st.markdown(f"<div class='movie-title'>{names[4]}</div>", unsafe_allow_html=True)
+    names, posters = recommend(selected_movie_name, similarity)
+
+    cols = st.columns(5)
+
+    for i in range(len(cols)):
+        with cols[i]:
+            if posters[i] is not None:
+                st.image(posters[i], use_container_width=True)
+            else:
+                st.info("Poster not available")
+            st.markdown(
+                f"<div class='movie-title'>{names[i]}</div>",
+                unsafe_allow_html=True
+            )
+
+##if st.button('Recommend'):
+ #   names,posters = recommend(selected_movie_name,similarity)
+#    col1, col2, col3, col4, col5 = st.columns(5)
+ #   with col1:
+  #      st.image(posters[0],use_container_width=True)
+   #     st.markdown(f"<div class='movie-title'>{names[0]}</div>", unsafe_allow_html=True)
+    #with col2:
+     #   st.image(posters[1],use_container_width=True)
+      #  st.markdown(f"<div class='movie-title'>{names[1]}</div>", unsafe_allow_html=True)
+#    with col3:
+#        st.image(posters[2],use_container_width=True)
+#        st.markdown(f"<div class='movie-title'>{names[2]}</div>", unsafe_allow_html=True)
+#    with col4:
+ #       st.image(posters[3],use_container_width=True)
+ #       st.markdown(f"<div class='movie-title'>{names[3]}</div>", unsafe_allow_html=True)
+ #   with col5:
+  #      st.image(posters[4],use_container_width=True)
+ #       st.markdown(f"<div class='movie-title'>{names[4]}</div>", unsafe_allow_html=True)##
 
 

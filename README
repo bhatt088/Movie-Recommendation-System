@@ -1,0 +1,65 @@
+🎬 Movie Recommendation System
+
+A content-based Movie Recommendation System built using Machine Learning, Streamlit, and TMDB API.
+The app recommends movies similar to a selected movie and displays their posters using real-time API calls.
+
+🚀 Live Demo
+👉 https://movie-recommendation-system-by-bhatt.onrender.com
+
+📌 Features
+1 - 🔍 Recommend Top 5 similar movies
+2 - 🤖 Uses Cosine Similarity on movie features
+3 - 🎞 Fetches real-time posters from TMDB API
+4 - 🖼 Graceful fallback for missing posters
+5 - ⚡ Fast performance using Streamlit caching
+6- 🌐 Fully deployable on Render 
+
+
+🛠 Tech Stack
+
+Python
+Streamlit – Web UI
+Pandas – Data handling
+Scikit-learn – Similarity computation
+TMDB API – Movie posters & metadata
+Hugging Face Hub – Model & data storage
+
+🧠 How It Works 
+
+1. A **movie similarity matrix** is precomputed using cosine similarity.
+2. User selects a movie from the dropdown.
+3. The system:
+   * Finds the selected movie index
+   * Sorts similarity scores
+   * Picks the top 5 most similar movies
+4. Posters are fetched using **TMDB API**
+5. If a poster is missing, a default placeholder image is shown (no crashes).
+
+
+## ☁️ Deployment Notes
+
+* `.pkl` files are loaded from Hugging Face for deployment safety
+* Environment variables are required on the cloud
+* Poster rendering is fully **null-safe**
+
+🏆 What I Learned
+
+* Handling **real-world API failures**
+* Writing **production-safe Streamlit apps**
+* Managing secrets using environment variables
+* Deploying ML apps on cloud platforms
+
+
+🤝 Contributing
+
+Pull Requests are welcome. Feel free to fork and improve!
+
+
+📜 License
+
+This project is for **educational purposes**.
+
+
+
+
+
